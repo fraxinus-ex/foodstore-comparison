@@ -4,45 +4,12 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-<!--    <changeSet id="2021-11-23 add more tables" author="Kadri Saare">
-        <createTable tableName="client">
+    <changeSet id="2021-12-6" author="Kadri Saare">
+        <createTable tableName="tootekategooriad">
             <column name = "id" type="int" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="first_name" type="text"/>
-            <column name="last_name" type="text"/>
-            <column name="address" type="text"/>
+            <column name="tootekategooria" type="text"/>
         </createTable>
-        <createTable tableName="bankaccount">
-            <column name = "id" type="int" autoIncrement="true">
-                <constraints primaryKey="true"/>
-            </column>
-            <column name="account_nr" type="text"/>
-            <column name="balance" type="integer"/>
-            <column name="is_locked" type="boolean" defaultValue="false">
-                <constraints nullable="false"/>
-            </column>
-            <column name="client_id" type="int">
-                <constraints foreignKeyName="fk_bank_account_client" references="client(id)"/>
-            </column>
-        </createTable>
-        <createTable tableName="employee">
-            <column name = "id" type="int" autoIncrement="true">
-                <constraints primaryKey="true"/>
-            </column>
-            <column name="first_name" type="text"/>
-            <column name="last_name" type="text"/>
-            <column name="position" type="text"/>
-            <column name="address" type="text"/>
-        </createTable>
-        <createTable tableName="transactions">
-            <column name = "id" type="int" autoIncrement="true">
-                <constraints primaryKey="true"/>
-            </column>
-            <column name="deposit" type="integer"/>
-            <column name="withdraw" type="integer"/>
-            <column name="transfer_from" type="text"/>
-            <column name="transfer_to" type="text"/>
-        </createTable>
-    </changeSet>-->
+    </changeSet>
 </databaseChangeLog>

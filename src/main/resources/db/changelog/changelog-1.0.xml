@@ -2,14 +2,24 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="2021-12-6" author="Kadri Saare">
-        <createTable tableName="tootekategooriad">
+    <changeSet id="2021-12-9" author="Kadri Saare">
+        <createTable tableName="product_categories">
             <column name = "id" type="int" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="tootekategooria" type="text"/>
+            <column name="product_category" type="text"/>
+        </createTable>
+        <createTable tableName="product_prices">
+            <column name = "id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="product_name" type="text"/>
+            <column name="ean" type="text"/>
+            <column name="prisma_price" type="numeric"/>
+            <column name="selver_price" type="numeric"/>
+            <column name="product_category" type="text"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>

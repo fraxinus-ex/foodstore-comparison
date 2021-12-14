@@ -1,13 +1,12 @@
 package com.example.foodstorecomparison.FoodStoreComparison;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,18 +17,16 @@ public class ProductRepository {
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 
-    public int createCategory(String productCategory) {
-        String sql = "INSERT INTO product_categories (product_category) VALUES (:productCategory)";
+    public void userPick (String ean) {
+        String sql = "INSERT INTO user_pick (ean) VALUES (:ean)";
         Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("productCategory", productCategory);
+        paramMap.put("ean", ean);
+        jdbcTemplate.update(sql, paramMap);
 
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(sql, new MapSqlParameterSource(paramMap), keyHolder);
-        return (Integer) keyHolder.getKeys().get("id");
     }
 
-    public void createProduct(String name, String ean, Double prismaPrice, Double selverPrice, Integer prismaCategory, Integer selverCategory) {
-        String sql = "INSERT INTO product_prices (product_name, ean, prisma_price, selver_price, prisma_category, selver_category) VALUES (:productName, :ean, :prismaPrice, :selverPrice, :prismaCategory, :selverCategory)";
+    public void createProduct(String name, String ean, Double prismaPrice, Double selverPrice, Integer prismaCategory, Integer selverCategory, String prismaImg, String selverImg) {
+        String sql = "INSERT INTO product_prices (product_name, ean, prisma_price, selver_price, prisma_category, selver_category, prisma_img, selver_img) VALUES (:productName, :ean, :prismaPrice, :selverPrice, :prismaCategory, :selverCategory, :prismaImg, :selverImg)";
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("productName", name);
         paramMap.put("ean", ean);
@@ -37,6 +34,8 @@ public class ProductRepository {
         paramMap.put("selverPrice", selverPrice);
         paramMap.put("prismaCategory", prismaCategory);
         paramMap.put("selverCategory", selverCategory);
+        paramMap.put("prismaImg", prismaImg);
+        paramMap.put("selverImg", selverImg);
 
         jdbcTemplate.update(sql, paramMap);
     }
@@ -49,4 +48,38 @@ public class ProductRepository {
         return jdbcTemplate.update(sql, paramMap);
     }
 
+    public AllProductInfoDTO getProductInfo(String ean) {
+        String sql = "SELECT * FROM product_prices WHERE ean = :ean";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("ean", ean);
+        AllProductInfoDTO allProductInfoDTO = jdbcTemplate.queryForObject(sql, paramMap, new AllProductInfoDTORowMapper());
+
+        return allProductInfoDTO;
+    }
+    public List<AllProductInfoDTO> getProductInfoByCategory(int ourCategory) {
+        String sql = "SELECT * FROM product_prices WHERE our_category = :ourCategory";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("ourCategory", ourCategory);
+        List<AllProductInfoDTO> result = jdbcTemplate.query(sql, paramMap, new AllProductInfoDTORowMapper());
+        return result;
+    }
+
+    public static class AllProductInfoDTORowMapper implements RowMapper<AllProductInfoDTO> {
+        @Override
+        public AllProductInfoDTO mapRow(ResultSet resultSet, int i) throws SQLException {
+            AllProductInfoDTO result = new AllProductInfoDTO();
+            result.setId(resultSet.getInt("id"));
+            result.setName(resultSet.getString("product_name"));
+            result.setEan(resultSet.getString("ean"));
+            result.setPrismaPrice(resultSet.getDouble("prisma_price"));
+            result.setSelverPrice(resultSet.getDouble("selver_price"));
+            result.setPrismaCategory(resultSet.getInt("prisma_category"));
+            result.setSelverCategory(resultSet.getInt("selver_category"));
+            result.setPrismaImg(resultSet.getString("prisma_img"));
+            result.setSelverImg(resultSet.getString("selver_img"));
+            result.setOurCategory(resultSet.getInt("our_category"));
+
+            return result;
+        }
+    }
 }

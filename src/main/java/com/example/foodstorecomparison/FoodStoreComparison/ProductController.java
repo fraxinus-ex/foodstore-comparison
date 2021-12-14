@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -13,16 +14,17 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @PostMapping("api/productController/createCategory")
-    public int createCategory(@RequestBody CategoryDTO category) {
-        return productService.createCategory(category.getProductCategory());
+    @PostMapping("api/productController/userPick")
+    public void userPick(@RequestBody ProductDTO product) {
+        productService.userPick(product.getEan());
     }
-//    @PutMapping("api/productController/updateProduct")
-//    public void updateProduct(@PathVariable("ean") String ean, @PathVariable("selverPrice") double selverPrice) {
-//        productService.updateProduct(ean, selverPrice);
-//    }
-//    @GetMapping("api/productController/getEan")
-//    public void getEan(@PathVariable)
-
+    @GetMapping("api/productController/productsByCategory?ourCategory=1")
+    public List<AllProductInfoDTO> getProductInfoByCategory(@RequestParam ("ourCategory") int ourCategory) {
+        return productService.getProductInfoByCategory(ourCategory);
+    }
+    @GetMapping("api/productController/getProduct/{ean}")
+    public AllProductInfoDTO getProductInfo(@PathVariable("ean") String ean) {
+        return productService.getProductInfo(ean);
+    }
 
 }

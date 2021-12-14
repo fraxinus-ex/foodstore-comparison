@@ -4,22 +4,30 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="2021-12-9" author="Kadri Saare">
-        <createTable tableName="product_categories">
-            <column name = "id" type="int" autoIncrement="true">
-                <constraints primaryKey="true"/>
-            </column>
-            <column name="product_category" type="text"/>
-        </createTable>
+    <changeSet id="2021-12-14" author="Kadri Saare">
         <createTable tableName="product_prices">
             <column name = "id" type="int" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
             <column name="product_name" type="text"/>
-            <column name="ean" type="text"/>
+            <column name="ean" type="text">
+                <constraints unique="true"/>
+            </column>
             <column name="prisma_price" type="numeric"/>
             <column name="selver_price" type="numeric"/>
-            <column name="product_category" type="text"/>
+            <column name="prisma_category" type="numeric"/>
+            <column name="selver_category" type="numeric"/>
+            <column name="prisma_img" type="text"/>
+            <column name="selver_img" type="text"/>
+            <column name="our_category" type="numeric"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="2021-12-14 user_pick table" author="Kadri Saare">
+        <createTable tableName="user_pick">
+            <column name = "id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="ean" type="text"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>

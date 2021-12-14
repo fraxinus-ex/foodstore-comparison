@@ -4,9 +4,13 @@ public class AllProductInfoDTO {
     private int id;
     private String name;
     public String ean;
-    private int prismaPrice;
-    private int selverPrice;
-    private String productCategory;
+    private double prismaPrice;
+    private double selverPrice;
+    private int prismaCategory;
+    private int selverCategory;
+    private String prismaImg;
+    private String selverImg;
+    private int ourCategory;
 
     public AllProductInfoDTO() {
     }
@@ -35,27 +39,59 @@ public class AllProductInfoDTO {
         this.ean = ean;
     }
 
-    public int getPrismaPrice() {
+    public double getPrismaPrice() {
         return prismaPrice;
     }
 
-    public void setPrismaPrice(int prismaPrice) {
+    public void setPrismaPrice(double prismaPrice) {
         this.prismaPrice = prismaPrice;
     }
 
-    public int getSelverPrice() {
+    public double getSelverPrice() {
         return selverPrice;
     }
 
-    public void setSelverPrice(int selverPrice) {
+    public void setSelverPrice(double selverPrice) {
         this.selverPrice = selverPrice;
     }
 
-    public String getProductCategory() {
-        return productCategory;
+    public int getPrismaCategory() {
+        return prismaCategory;
     }
 
-    public void setProductCategory(String productCategory) {
-        this.productCategory = productCategory;
+    public void setPrismaCategory(int prismaCategory) {
+        this.prismaCategory = prismaCategory;
+    }
+
+    public int getSelverCategory() {
+        return selverCategory;
+    }
+
+    public void setSelverCategory(int selverCategory) {
+        this.selverCategory = selverCategory;
+    }
+
+    public String getPrismaImg() {
+        return prismaImg;
+    }
+
+    public void setPrismaImg(String prismaImg) {
+        this.prismaImg = prismaImg;
+    }
+
+    public String getSelverImg() {
+        return selverImg;
+    }
+
+    public void setSelverImg(String selverImg) {
+        this.selverImg = selverImg;
+    }
+
+    public int getOurCategory() {
+        return ourCategory;
+    }
+
+    public void setOurCategory(int ourCategory) {
+        this.ourCategory = ourCategory;
     }
 }

@@ -8,8 +8,7 @@ public class AllProductInfoDTO {
     private double selverPrice;
     private int prismaCategory;
     private int selverCategory;
-    private String prismaImg;
-    private String selverImg;
+    private String image;
     private int ourCategory;
 
     public AllProductInfoDTO() {
@@ -71,20 +70,12 @@ public class AllProductInfoDTO {
         this.selverCategory = selverCategory;
     }
 
-    public String getPrismaImg() {
-        return prismaImg;
+    public String getImage() {
+        return image;
     }
 
-    public void setPrismaImg(String prismaImg) {
-        this.prismaImg = prismaImg;
-    }
-
-    public String getSelverImg() {
-        return selverImg;
-    }
-
-    public void setSelverImg(String selverImg) {
-        this.selverImg = selverImg;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public int getOurCategory() {

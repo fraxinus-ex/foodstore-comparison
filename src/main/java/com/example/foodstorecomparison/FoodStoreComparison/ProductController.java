@@ -26,5 +26,17 @@ public class ProductController {
     public AllProductInfoDTO getProductInfo(@PathVariable("ean") String ean) {
         return productService.getProductInfo(ean);
     }
+    @GetMapping("api/productController/getUserPick")
+    public List<ProductDTO> getUserPick() {
+        return productService.getUserPick();
+    }
 
+    @DeleteMapping("api/productController/deleteOne/{ean}")
+    public void deleteOne(@PathVariable("ean") String ean) {
+        productService.deleteOne(ean);
+    }
+    @DeleteMapping("api/productController/deleteAll")
+    public void deleteAll() {
+        productService.deleteAll();
+    }
 }

@@ -34,4 +34,15 @@ public class ProductService {
         AllProductInfoDTO allProductInfoDTO = productRepository.getProductInfo(ean);
         return allProductInfoDTO;
     }
+
+    public void deleteOne(String ean) {
+        productRepository.deleteOne(ean);
+    }
+    public void deleteAll() {
+        productRepository.deleteAll();
+    }
+
+    public List<ProductDTO> getUserPick() {
+        return productRepository.getUserPick();
+    }
 }

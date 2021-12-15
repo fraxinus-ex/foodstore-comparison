@@ -64,6 +64,37 @@ public class ProductRepository {
         return result;
     }
 
+    public void deleteOne(String ean) {
+        String sql = "DELETE FROM user_pick WHERE ean = :ean";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("ean", ean);
+        jdbcTemplate.update(sql, paramMap);
+    }
+    public void deleteAll(){
+        String sql = "DELETE FROM user_pick";
+        Map<String, Object> paramMap = new HashMap<>();
+        jdbcTemplate.update(sql, paramMap);
+    }
+
+    public List<ProductDTO> getUserPick() {
+        String sql = "SELECT pp.* FROM user_pick JOIN product_prices pp on user_pick.ean = pp.ean";
+        Map<String, Object> paramMap = new HashMap<>();
+        List<ProductDTO> result = jdbcTemplate.query(sql, paramMap, new ProductDTORowMapper());
+        return result;
+    }
+
+    public static class ProductDTORowMapper implements RowMapper<ProductDTO> {
+        @Override
+        public ProductDTO mapRow(ResultSet resultSet, int i) throws SQLException {
+            ProductDTO result = new ProductDTO();
+
+            result.setName(resultSet.getString("product_name"));
+            result.setEan(resultSet.getString("ean"));
+            result.setPrismaPrice(resultSet.getDouble("prisma_price"));
+            result.setSelverPrice(resultSet.getDouble("selver_price"));
+            return result;
+        }
+    }
     public static class AllProductInfoDTORowMapper implements RowMapper<AllProductInfoDTO> {
         @Override
         public AllProductInfoDTO mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -75,11 +106,17 @@ public class ProductRepository {
             result.setSelverPrice(resultSet.getDouble("selver_price"));
             result.setPrismaCategory(resultSet.getInt("prisma_category"));
             result.setSelverCategory(resultSet.getInt("selver_category"));
-            result.setPrismaImg(resultSet.getString("prisma_img"));
-            result.setSelverImg(resultSet.getString("selver_img"));
+            String prismaImage = resultSet.getString("prisma_img");
+            String selverImage = resultSet.getString("selver_img");
+            if (prismaImage == null) {
+                result.setImage(selverImage);
+            } else {
+                result.setImage(prismaImage);
+            }
             result.setOurCategory(resultSet.getInt("our_category"));
 
             return result;
         }
     }
+
 }

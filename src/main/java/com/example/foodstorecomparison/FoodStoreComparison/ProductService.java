@@ -34,6 +34,12 @@ public class ProductService {
         AllProductInfoDTO allProductInfoDTO = productRepository.getProductInfo(ean);
         return allProductInfoDTO;
     }
+    public double sumPrismaPrice() {
+        return productRepository.sumPrismaPrice();
+    }
+    public double sumSelverPrice() {
+        return productRepository.sumSelverPrice();
+    }
 
     public void deleteOne(String ean) {
         productRepository.deleteOne(ean);

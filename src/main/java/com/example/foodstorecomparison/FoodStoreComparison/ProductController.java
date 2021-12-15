@@ -18,7 +18,8 @@ public class ProductController {
     public void userPick(@RequestBody ProductDTO product) {
         productService.userPick(product.getEan());
     }
-    @GetMapping("api/productController/productsByCategory?ourCategory=1")
+    //api/productController/productsByCategory?ourCategory=1
+    @GetMapping("api/productController/productsByCategory")
     public List<AllProductInfoDTO> getProductInfoByCategory(@RequestParam ("ourCategory") int ourCategory) {
         return productService.getProductInfoByCategory(ourCategory);
     }
@@ -29,6 +30,14 @@ public class ProductController {
     @GetMapping("api/productController/getUserPick")
     public List<ProductDTO> getUserPick() {
         return productService.getUserPick();
+    }
+    @GetMapping("api/productController/sumPrismaPrice")
+    public double sumPrismaPrice() {
+        return productService.sumPrismaPrice();
+    }
+    @GetMapping("api/productController/sumSelverPrice")
+    public double sumSelverPrice() {
+        return productService.sumSelverPrice();
     }
 
     @DeleteMapping("api/productController/deleteOne/{ean}")

@@ -22,7 +22,6 @@ public class ProductRepository {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("ean", ean);
         jdbcTemplate.update(sql, paramMap);
-
     }
 
     public void createProduct(String name, String ean, Double prismaPrice, Double selverPrice, Integer prismaCategory, Integer selverCategory, String prismaImg, String selverImg) {
@@ -74,6 +73,16 @@ public class ProductRepository {
         String sql = "DELETE FROM user_pick";
         Map<String, Object> paramMap = new HashMap<>();
         jdbcTemplate.update(sql, paramMap);
+    }
+    public double sumPrismaPrice() {
+        String sql = "SELECT SUM(prisma_price) FROM user_pick JOIN product_prices pp on user_pick.ean = pp.ean";
+        Map<String, Object> paramMap = new HashMap<>();
+        return jdbcTemplate.queryForObject(sql, paramMap, double.class);
+    }
+    public double sumSelverPrice() {
+        String sql = "SELECT SUM(selver_price) FROM user_pick JOIN product_prices pp on user_pick.ean = pp.ean";
+        Map<String, Object> paramMap = new HashMap<>();
+        return jdbcTemplate.queryForObject(sql, paramMap, double.class);
     }
 
     public List<ProductDTO> getUserPick() {

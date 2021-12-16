@@ -16,11 +16,29 @@ public class ProductService {
     public void userPick(String ean) {
         productRepository.userPick(ean);
     }
+//    public int countEan () {
+//        return productRepository.countEan();
+//    }
 
-    public List<AllProductInfoDTO> getProductInfoByCategory(int ourCategory) {
-        return productRepository.getProductInfoByCategory(ourCategory);
+    public List<AllProductInfoDTO> getProductInfoByCategory(int ourCategory, Integer page, String search) {
+        if(page == null) {
+            page = 1;
+        }
+        int limit = 50;
+        int offset = (page - 1) * limit;
+
+        return productRepository.getProductInfoByCategory(ourCategory, limit, offset, search);
     }
-
+    public int getPageCount (int ourCategory) {
+        int pageCount = productRepository.getPageCount(ourCategory);
+        int pages = 0;
+        if(pageCount % 50 == 0) {
+            pages = pageCount / 50;
+        } else if (pageCount % 50 != 0) {
+            pages = pageCount / 50 + 1;
+        }
+        return pages;
+    }
     public void createProduct(String name, String ean, Double prismaPrice, Double selverPrice, Integer prismaCategory, Integer selverCategory, String prismaImg, String selverImg) {
         productRepository.createProduct(name, ean, prismaPrice, selverPrice, prismaCategory, selverCategory, prismaImg, selverImg);
     }
@@ -34,12 +52,13 @@ public class ProductService {
         AllProductInfoDTO allProductInfoDTO = productRepository.getProductInfo(ean);
         return allProductInfoDTO;
     }
-    public double sumPrismaPrice() {
+    public Double sumPrismaPrice() {
         return productRepository.sumPrismaPrice();
     }
-    public double sumSelverPrice() {
+    public Double sumSelverPrice() {
         return productRepository.sumSelverPrice();
     }
+
 
     public void deleteOne(String ean) {
         productRepository.deleteOne(ean);

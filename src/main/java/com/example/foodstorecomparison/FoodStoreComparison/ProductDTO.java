@@ -6,6 +6,7 @@ public class ProductDTO {
     private double prismaPrice;
     private double selverPrice;
 
+
     public ProductDTO() {
     }
 

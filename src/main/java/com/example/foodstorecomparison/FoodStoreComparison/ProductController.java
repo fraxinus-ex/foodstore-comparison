@@ -15,13 +15,17 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping("api/productController/userPick")
-    public void userPick(@RequestBody ProductDTO product) {
-        productService.userPick(product.getEan());
+    public void userPick(@RequestBody EanDTO eanDTO) {
+        productService.userPick(eanDTO.getEan());
     }
-    //api/productController/productsByCategory?ourCategory=1
+
+    // localhost:8080/api/productController/productsByCategory?ourCategory=1&page=1
+    // localhost:8080/api/productController/productsByCategory?ourCategory=1&page=2
     @GetMapping("api/productController/productsByCategory")
-    public List<AllProductInfoDTO> getProductInfoByCategory(@RequestParam ("ourCategory") int ourCategory) {
-        return productService.getProductInfoByCategory(ourCategory);
+    public List<AllProductInfoDTO> getProductInfoByCategory(@RequestParam ("ourCategory") int ourCategory,
+                                                            @RequestParam (value = "page", required = false) Integer page,
+                                                            @RequestParam ("search") String search) {
+        return productService.getProductInfoByCategory(ourCategory, page, search);
     }
     @GetMapping("api/productController/getProduct/{ean}")
     public AllProductInfoDTO getProductInfo(@PathVariable("ean") String ean) {
@@ -31,12 +35,16 @@ public class ProductController {
     public List<ProductDTO> getUserPick() {
         return productService.getUserPick();
     }
+    @GetMapping("api/productController/getPageCount/{ourCategory}")
+    public int getPageCount (@PathVariable ("ourCategory") int ourCategory) {
+        return productService.getPageCount(ourCategory);
+    }
     @GetMapping("api/productController/sumPrismaPrice")
-    public double sumPrismaPrice() {
+    public Double sumPrismaPrice() {
         return productService.sumPrismaPrice();
     }
     @GetMapping("api/productController/sumSelverPrice")
-    public double sumSelverPrice() {
+    public Double sumSelverPrice() {
         return productService.sumSelverPrice();
     }
 

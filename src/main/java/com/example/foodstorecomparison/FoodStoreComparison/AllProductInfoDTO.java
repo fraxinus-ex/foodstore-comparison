@@ -10,6 +10,24 @@ public class AllProductInfoDTO {
     private int selverCategory;
     private String image;
     private int ourCategory;
+    private boolean alertVariable;
+    private int pageCount;
+
+    public int getPageCount() {
+        return pageCount;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
+
+    public boolean isAlertVariable() {
+        return alertVariable;
+    }
+
+    public void setAlertVariable(boolean alertVariable) {
+        this.alertVariable = alertVariable;
+    }
 
     public AllProductInfoDTO() {
     }

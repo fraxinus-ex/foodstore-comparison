@@ -36,8 +36,8 @@ public class ProductController {
         return productService.getUserPick();
     }
     @GetMapping("api/productController/getPageCount/{ourCategory}")
-    public int getPageCount (@PathVariable ("ourCategory") int ourCategory) {
-        return productService.getPageCount(ourCategory);
+    public int getPageCount (@PathVariable ("ourCategory") int ourCategory, String search) {
+        return productService.getPageCount(ourCategory, search);
     }
     @GetMapping("api/productController/sumPrismaPrice")
     public Double sumPrismaPrice() {

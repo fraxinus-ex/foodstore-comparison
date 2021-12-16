@@ -60,7 +60,8 @@ public class ProductRepository {
         return allProductInfoDTO;
     }
     public List<AllProductInfoDTO> getProductInfoByCategory(int ourCategory, int limit, int offset, String search) {
-        String sql1 = "SELECT * FROM product_prices WHERE our_category = :ourCategory ";
+        String sql1 = "SELECT * FROM product_prices WHERE our_category = :ourCategory " +
+                "AND prisma_price IS NOT NULL and selver_price IS NOT NULL ";
         String sql2 = "";
         String sql3 = "order by id limit :limit offset :offset";
         Map<String, Object> paramMap = new HashMap<>();
@@ -76,10 +77,15 @@ public class ProductRepository {
         return result;
 
     }
-    public int getPageCount (int ourCategory) {
-        String sql = "SELECT count(*) FROM product_prices where our_category = :ourCategory";
+    public int getPageCount (int ourCategory, String search) {
+        String sql = "SELECT count(*) FROM product_prices where our_category = :ourCategory and " +
+                "prisma_price IS NOT NULL and selver_price IS NOT NULL ";
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("ourCategory", ourCategory);
+        if(search != null && !search.isBlank()) {
+            sql += "and product_name ILIKE :search ";
+            paramMap.put("search", "%" + search + "%");
+        }
         return jdbcTemplate.queryForObject(sql, paramMap, Integer.class);
     }
 

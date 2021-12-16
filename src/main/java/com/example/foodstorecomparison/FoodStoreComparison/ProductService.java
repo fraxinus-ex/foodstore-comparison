@@ -24,18 +24,18 @@ public class ProductService {
         if(page == null) {
             page = 1;
         }
-        int limit = 50;
+        int limit = 48;
         int offset = (page - 1) * limit;
 
         return productRepository.getProductInfoByCategory(ourCategory, limit, offset, search);
     }
-    public int getPageCount (int ourCategory) {
-        int pageCount = productRepository.getPageCount(ourCategory);
+    public int getPageCount (int ourCategory, String search) {
+        int pageCount = productRepository.getPageCount(ourCategory, search);
         int pages = 0;
-        if(pageCount % 50 == 0) {
-            pages = pageCount / 50;
-        } else if (pageCount % 50 != 0) {
-            pages = pageCount / 50 + 1;
+        if(pageCount % 48 == 0) {
+            pages = pageCount / 48;
+        } else if (pageCount % 48 != 0) {
+            pages = pageCount / 48 + 1;
         }
         return pages;
     }
